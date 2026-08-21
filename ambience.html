@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+  #piyoAmbienceBtn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid #dda14b;
+    background: #17110d;
+    color: #f2e5cf;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<button id="piyoAmbienceBtn">🔇</button>
+
+<audio id="piyoAmbienceAudio" loop preload="none">
+  <source src="https://github.com/shalakaofficial/PIYO.BAR/raw/refs/heads/main/Ambience%20Noise%20Option%203.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  var btn = document.getElementById('piyoAmbienceBtn');
+  var audio = document.getElementById('piyoAmbienceAudio');
+  var playing = false;
+
+  btn.addEventListener('click', function () {
+    if (!playing) {
+      audio.volume = 0.4;
+      audio.play().then(function () {
+        btn.textContent = '🔊';
+        playing = true;
+      }).catch(function () {
+        btn.textContent = '⚠️';
+      });
+    } else {
+      audio.pause();
+      btn.textContent = '🔇';
+      playing = false;
+    }
+  });
+</script>
+
+</body>
+</html>
