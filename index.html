@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIYO.BAR</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+  .tagline {
+    font-size: 42px;
+    line-height: 1.35;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  .tagline .highlight {
+    color: #17110d;
+    background: #f2e5cf;
+    padding: 2px 8px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .tagline .accent {
+    color: #17110d;
+    background: #dda14b;
+    padding: 2px 8px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  @media (max-width: 600px) {
+    .tagline { font-size: 30px; }
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="nav-left">
+    <div class="nav-title">PIYO.BAR</div>
+  </div>
+  <div class="nav-right">
+    <a href="#" id="whatsappLink">Doston ko bhi bula!</a>
+  </div>
+</div>
+
+<div class="split-wrap">
+
+  <!-- LEFT: TAGLINE -->
+  <div>
+    <div class="tagline">
+      <span class="highlight">Aaj se koi bhi</span><br>
+      <span class="accent">akele daaru nahi piyega!</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="glass-card">
+
+    <form id="piyoForm">
+
+      <input type="text" id="name" name="name" placeholder="Tera naam kya hai?" required>
+
+      <h2>Konsa peg piyega?</h2>
+
+      <div class="peg-options">
+        <div class="option">
+          <input type="radio" id="rum" name="peg" value="Rum" required>
+          <label for="rum">🥃 Rum</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="whisky" name="peg" value="Whisky">
+          <label for="whisky">🥃 Whisky</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="beer" name="peg" value="Beer">
+          <label for="beer">🍺 Beer</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="wine" name="peg" value="Wine">
+          <label for="wine">🍷 Wine</label>
+        </div>
+      </div>
+
+      <div class="driver-option option">
+        <input type="radio" id="driver" name="peg" value="Designated Driver">
+        <label for="driver">🚗 Main toh driver hoon</label>
+      </div>
+
+      <textarea id="message" name="message" placeholder="Aaj ka scene kya hai?"></textarea>
+
+      <button type="submit" id="submitBtn" class="submit-btn">CHAL, SUBMIT KAR 🍻</button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- AMBIENCE BUTTON -->
+<button id="piyoAmbienceBtn">🔇</button>
+<audio id="piyoAmbienceAudio" loop preload="none">
+  <source src="https://github.com/shalakaofficial/PIYO.BAR/raw/refs/heads/main/Ambience%20Noise%20Option%203.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+  // WHATSAPP LINK
+  var waMessage = "Chal, ek peg maarte hain. Aa ja @ PIYO.BAR pe! https://www.piyo.bar 🥃";
+  document.getElementById('whatsappLink').href =
+    "https://wa.me/?text=" + encodeURIComponent(waMessage);
+
+  // AMBIENCE TOGGLE
+  var ambBtn = document.getElementById('piyoAmbienceBtn');
+  var ambAudio = document.getElementById('piyoAmbienceAudio');
+  var ambPlaying = false;
+
+  ambBtn.addEventListener('click', function () {
+    if (!ambPlaying) {
+      ambAudio.volume = 0.4;
+      ambAudio.play().then(function () {
+        ambBtn.textContent = '🔊';
+        ambPlaying = true;
+      }).catch(function () {
+        ambBtn.textContent = '⚠️';
+      });
+    } else {
+      ambAudio.pause();
+      ambBtn.textContent = '🔇';
+      ambPlaying = false;
+    }
+  });
+
+  // FORM SUBMIT
+  var scriptURL = "https://script.google.com/macros/s/AKfycbx2p_ALGkRuen-UMSvC547Ij6eaTN5XPBO5mfJac2eH0nEUnZsSsiorvbum4qUurpwg/exec";
+  var cheersURL = "cheers.html";
+
+  var form = document.getElementById('piyoForm');
+  var submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', function (e) {
+
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Ek sec...";
+
+    var nameVal = document.getElementById('name').value;
+
+    // Remember the visitor's name for the Cheers page —
+    // works because both pages share the same GitHub Pages domain
+    localStorage.setItem('piyoName', nameVal);
+
+    var formData = new FormData(form);
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors',
+      keepalive: true
+    }).catch(function () {});
+
+    // This is a real top-level page (not embedded in an iframe),
+    // so a normal same-tab redirect works reliably here.
+    window.location.href = cheersURL;
+
+  });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Lexend", sans-serif;
+  color: #f2e5cf;
+  background: #17110d;
+}
+
+body {
+  background-image: linear-gradient(rgba(10,7,5,0.55), rgba(10,7,5,0.72)), url('bar-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* NAV */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  background: rgba(23, 17, 13, 0.92);
+  border-bottom: 1px solid rgba(221,161,75,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 500;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.nav-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.nav-right a {
+  color: #f2e5cf;
+  text-decoration: none;
+  font-size: 14px;
+  margin-left: 20px;
+  opacity: 0.9;
+}
+
+.nav-right a:hover {
+  opacity: 1;
+}
+
+.nav-right a.leave-link {
+  color: #dda14b;
+  cursor: pointer;
+}
+
+/* SPLIT LAYOUT (used on both pages) */
+
+.split-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .split-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* GLASS CARD — the shared "frosted" panel look */
+
+.glass-card {
+  background: rgba(23, 17, 13, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(225, 180, 112, 0.28);
+  border-radius: 6px;
+  padding: 22px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.glass-card + .glass-card {
+  margin-top: 22px;
+}
+
+.glass-card h2 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  color: #f0d29b;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* FORM ELEMENTS (shared) */
+
+input[type="text"], textarea {
+  width: 100%;
+  border: 1px solid rgba(225, 180, 112, 0.4);
+  background: rgba(12, 9, 7, 0.6);
+  color: #f4e7d0;
+  font-family: "Lexend", sans-serif;
+  font-size: 15px;
+  padding: 12px 14px;
+  outline: none;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  transition: all 0.18s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+  border-color: rgba(225, 180, 112, 0.85);
+  background: rgba(12, 9, 7, 0.75);
+}
+
+input[type="text"]::placeholder, textarea::placeholder {
+  color: rgba(230, 211, 184, 0.65);
+}
+
+input[type="text"]:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px rgba(12,9,7,0.85) inset !important;
+  -webkit-text-fill-color: #f4e7d0 !important;
+  caret-color: #f4e7d0;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+textarea { height: 60px; resize: none; }
+
+.peg-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 500px) {
+  .peg-options { grid-template-columns: repeat(2, 1fr); }
+}
+
+.peg-options .option { position: relative; }
+
+.peg-options input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.peg-options label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 5px;
+  border: 1px solid rgba(225, 180, 112, 0.35);
+  background: rgba(12, 9, 7, 0.55);
+  color: #e5d5bd;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.18s ease;
+  text-align: center;
+}
+
+.peg-options label:hover {
+  border-color: rgba(225, 180, 112, 0.75);
+  background: rgba(35, 24, 17, 0.7);
+}
+
+.peg-options input:checked + label {
+  border-color: #dda14b;
+  background: rgba(105, 65, 25, 0.55);
+  color: #ffe0a6;
+}
+
+.driver-option {
+  margin-bottom: 14px;
+}
+
+.driver-option label {
+  min-height: 38px;
+  font-size: 13.5px;
+  background: rgba(12, 9, 7, 0.4);
+  color: #cbbba4;
+}
+
+.driver-option input:checked + label {
+  background: rgba(105, 65, 25, 0.45);
+  color: #ffe0a6;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #dda14b;
+  background: #dda14b;
+  color: #17110d;
+  font-family: "Lexend", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.18s ease;
+}
+
+.submit-btn:hover {
+  background: #efb960;
+  border-color: #efb960;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* AMBIENCE BUTTON (shared) */
+
+#piyoAmbienceBtn {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid #dda14b;
+  background: rgba(23,17,13,0.92);
+  color: #f2e5cf;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  z-index: 999;
+}

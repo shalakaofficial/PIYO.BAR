@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIYO.BAR — Cheers</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+  h1.page-title {
+    font-size: 22px;
+    margin: 0 0 4px;
+    color: #ffe0a6;
+    font-weight: 600;
+  }
+
+  .welcome-line {
+    font-size: 14px;
+    color: rgba(242,229,207,0.75);
+    margin: 0 0 22px;
+  }
+
+  .top-title-row {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+  }
+
+  /* RETRO TV */
+
+  .tv {
+    background: linear-gradient(160deg, #4a3524, #2a1c12);
+    border: 6px solid #6b4a2b;
+    border-radius: 14px;
+    padding: 16px 16px 22px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .tv-screen {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 3px solid #1a120a;
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+  }
+
+  .tv-screen iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .tv-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .tv-knob {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #cfa15c, #6b4a2b);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+
+  /* VISITOR PILLS */
+
+  .visitor-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .visitor-pill {
+    background: rgba(105, 65, 25, 0.35);
+    border: 1px solid rgba(225, 180, 112, 0.3);
+    color: #e5d5bd;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  /* HALL OF FAME — glass card, on-theme instead of a literal chalkboard */
+
+  .fame-entry {
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(225,180,112,0.15);
+    color: #ecdfc8;
+  }
+
+  .fame-entry:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .fame-entry b { color: #ffe0a6; }
+
+  /* MODAL */
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal-box {
+    background: rgba(23,17,13,0.95);
+    border: 1px solid #dda14b;
+    padding: 30px 26px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    border-radius: 6px;
+  }
+
+  .modal-box p {
+    font-size: 17px;
+    margin: 0 0 20px;
+    color: #f2e5cf;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .modal-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #dda14b;
+    font-family: "Lexend", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .btn-stay {
+    background: #dda14b;
+    color: #17110d;
+  }
+
+  .btn-go {
+    background: transparent;
+    color: #f2e5cf;
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="nav-left">
+    <div class="nav-title">PIYO.BAR</div>
+  </div>
+  <div class="nav-right">
+    <a href="index.html">Scene bata</a>
+    <a href="#" id="whatsappLink">Doston ko bhi bula!</a>
+    <a class="leave-link" id="leaveTrigger">Nikalu 🚪</a>
+  </div>
+</div>
+
+<div class="top-title-row">
+  <h1 class="page-title">Cheers! 🍻</h1>
+  <p class="welcome-line" id="welcomeLine">Tera peg lag gaya bar mein.</p>
+</div>
+
+<div class="split-wrap">
+
+  <!-- LEFT: RETRO TV -->
+  <div>
+    <div class="tv">
+      <div class="tv-screen">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=PLMPuaohVmr4A"
+          title="PIYO.BAR Playlist"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="tv-controls">
+        <div class="tv-knob"></div>
+        <div class="tv-knob"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: VISITOR LIST + HALL OF FAME + FORM -->
+  <div>
+
+    <div class="glass-card">
+      <h2>Naye Yaar</h2>
+      <div class="visitor-list" id="visitorList">
+        <span class="visitor-pill">Rohan</span>
+        <span class="visitor-pill">Priya</span>
+        <span class="visitor-pill">Kunal</span>
+        <span class="visitor-pill">Aisha</span>
+        <span class="visitor-pill">Vikram</span>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h2>🏆 Hall of Fame</h2>
+      <div id="fameList">
+        <div class="fame-entry"><b>Shalaka from Mumbai</b> raised a Rum wala glass: "Kya baat hai!"</div>
+        <div class="fame-entry"><b>Aditya from Pune</b> raised a Whisky wala glass: "Bas ek aur!"</div>
+        <div class="fame-entry"><b>Meera from Delhi</b> raised a Wine wala glass: "Cheers to Friday!"</div>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h2>Apna Cheers Bhejo</h2>
+      <form id="cheersForm">
+
+        <!-- Fallback name field, only shown if we don't already know the visitor's name -->
+        <input type="text" id="cheersName" placeholder="Tera naam?" style="display:none;">
+
+        <div class="peg-options">
+          <div class="option">
+            <input type="radio" id="c-rum" name="cpeg" value="Rum" required>
+            <label for="c-rum">🥃 Rum</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="c-whisky" name="cpeg" value="Whisky">
+            <label for="c-whisky">🥃 Whisky</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="c-beer" name="cpeg" value="Beer">
+            <label for="c-beer">🍺 Beer</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="c-wine" name="cpeg" value="Wine">
+            <label for="c-wine">🍷 Wine</label>
+          </div>
+        </div>
+
+        <textarea id="cheersMessage" placeholder="Koi short message? (optional)"></textarea>
+
+        <button type="submit" class="submit-btn">CHEERS KARO 🥂</button>
+
+      </form>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- AMBIENCE BUTTON -->
+<button id="piyoAmbienceBtn">🔇</button>
+<audio id="piyoAmbienceAudio" loop preload="none">
+  <source src="https://github.com/shalakaofficial/PIYO.BAR/raw/refs/heads/main/Ambience%20Noise%20Option%203.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LEAVE MODAL -->
+<div class="modal-overlay" id="leaveModal">
+  <div class="modal-box" id="leaveModalContent">
+    <p>Itani jaldi? Ek last peg pi le yaar!</p>
+    <div class="modal-buttons">
+      <button class="btn-stay" id="stayBtn">Ok, one last...</button>
+      <button class="btn-go" id="goBtn">Naah bro, gotta go!</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  // WHATSAPP LINK (same as home page)
+  var waMessage = "Chal, ek peg maarte hain. Aa ja @ PIYO.BAR pe! https://www.piyo.bar 🥃";
+  document.getElementById('whatsappLink').href =
+    "https://wa.me/?text=" + encodeURIComponent(waMessage);
+
+  // RETRIEVE NAME FROM HOME PAGE (localStorage, same-origin)
+  var savedName = localStorage.getItem('piyoName');
+  var cheersNameInput = document.getElementById('cheersName');
+
+  if (savedName) {
+    document.getElementById('welcomeLine').textContent =
+      "Tera peg lag gaya bar mein, " + savedName + "!";
+  } else {
+    // No name on file (e.g. visited Cheers directly) — show the fallback field
+    cheersNameInput.style.display = 'block';
+    cheersNameInput.required = true;
+  }
+
+  // AMBIENCE TOGGLE
+  var ambBtn = document.getElementById('piyoAmbienceBtn');
+  var ambAudio = document.getElementById('piyoAmbienceAudio');
+  var ambPlaying = false;
+
+  ambBtn.addEventListener('click', function () {
+    if (!ambPlaying) {
+      ambAudio.volume = 0.4;
+      ambAudio.play().then(function () {
+        ambBtn.textContent = '🔊';
+        ambPlaying = true;
+      }).catch(function () {
+        ambBtn.textContent = '⚠️';
+      });
+    } else {
+      ambAudio.pause();
+      ambBtn.textContent = '🔇';
+      ambPlaying = false;
+    }
+  });
+
+  // LEAVE THE BAR MODAL
+  var leaveTrigger = document.getElementById('leaveTrigger');
+  var leaveModal = document.getElementById('leaveModal');
+  var leaveModalContent = document.getElementById('leaveModalContent');
+  var stayBtn = document.getElementById('stayBtn');
+  var goBtn = document.getElementById('goBtn');
+
+  leaveTrigger.addEventListener('click', function () {
+    leaveModal.classList.add('active');
+  });
+
+  stayBtn.addEventListener('click', function () {
+    leaveModal.classList.remove('active');
+  });
+
+  goBtn.addEventListener('click', function () {
+    leaveModalContent.innerHTML = '<p style="font-size:20px; color:#ffe0a6;">Tomorrow, same time! 🍻</p>';
+  });
+
+  // CHEERS FORM (placeholder — backend wiring comes next phase)
+  var cheersForm = document.getElementById('cheersForm');
+  cheersForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nameToUse = savedName || cheersNameInput.value;
+    alert('Cheers backend not wired up yet — would submit as: ' + nameToUse);
+  });
+
+</script>
+
+</body>
+</html>
