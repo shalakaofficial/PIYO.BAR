@@ -16,6 +16,8 @@ body {
   background-position: center top;
   background-attachment: fixed;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* NAV */
@@ -76,7 +78,16 @@ body {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 36px;
-  align-items: start;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  align-content: center;
+}
+
+@media (min-width: 1600px) {
+  .split-wrap {
+    max-width: 1440px;
+  }
 }
 
 @media (max-width: 860px) {
