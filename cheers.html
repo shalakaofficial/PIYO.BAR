@@ -44,6 +44,13 @@
     padding: 32px 24px 0;
   }
 
+  /* Override the home page's vertical-centering behavior —
+     on Cheers we want the TV and cards to start flush at the top */
+  .split-wrap {
+    align-items: start !important;
+    align-content: start !important;
+  }
+
   /* RETRO TV — wooden cabinet console style */
 
   .tv {
@@ -176,7 +183,8 @@
   .visitor-pill {
     background: rgba(105, 65, 25, 0.35);
     border: 1px solid rgba(225, 180, 112, 0.3);
-    color: #e5d5bd;
+    color: #ffc978;
+    font-weight: 600;
     font-size: 13px;
     padding: 6px 12px;
     border-radius: 20px;
@@ -199,7 +207,7 @@
     padding-bottom: 0;
   }
 
-  .fame-entry b { color: #ffe0a6; }
+  .fame-entry b { color: #ffc978; font-weight: 600; }
 
   /* MODAL */
 
@@ -385,8 +393,45 @@
   document.getElementById('whatsappLink').href =
     "https://wa.me/?text=" + encodeURIComponent(waMessage);
 
-  // BACKEND URL (same Apps Script project as the home page form)
-  var scriptURL = "https://script.google.com/macros/s/AKfycbx2p_ALGkRuen-UMSvC547Ij6eaTN5XPBO5mfJac2eH0nEUnZsSsiorvbum4qUurpwg/exec";
+  // JSONP helper — bypasses CORS since Apps Script doesn't send the
+  // headers a normal cross-origin fetch() needs to read the response
+  function loadJSONP(url, onData, onError) {
+    var callbackName = 'piyoCb_' + Math.random().toString(36).slice(2);
+    var script = document.createElement('script');
+    var done = false;
+
+    var timeout = setTimeout(function () {
+      if (!done) {
+        done = true;
+        cleanup();
+        onError();
+      }
+    }, 8000);
+
+    function cleanup() {
+      clearTimeout(timeout);
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[callbackName] = function (data) {
+      if (done) return;
+      done = true;
+      cleanup();
+      onData(data);
+    };
+
+    script.onerror = function () {
+      if (done) return;
+      done = true;
+      cleanup();
+      onError();
+    };
+
+    var sep = url.indexOf('?') > -1 ? '&' : '?';
+    script.src = url + sep + 'callback=' + callbackName;
+    document.head.appendChild(script);
+  }
 
   // RETRIEVE NAME FROM HOME PAGE (localStorage, same-origin)
   var savedName = localStorage.getItem('piyoName');
@@ -401,56 +446,53 @@
     cheersNameInput.required = true;
   }
 
+  // BACKEND URL (same Apps Script project as the home page form)
+  var scriptURL = "https://script.google.com/macros/s/AKfycbx2p_ALGkRuen-UMSvC547Ij6eaTN5XPBO5mfJac2eH0nEUnZsSsiorvbum4qUurpwg/exec";
+
   // LOAD VISITOR LIST ("Bajuwale table pe kaun hai?")
   var visitorList = document.getElementById('visitorList');
 
-  fetch(scriptURL + '?action=visitors')
-    .then(function (res) { return res.json(); })
-    .then(function (data) {
-      visitorList.innerHTML = '';
-      if (data.visitors && data.visitors.length) {
-        data.visitors.forEach(function (name) {
-          var pill = document.createElement('span');
-          pill.className = 'visitor-pill';
-          pill.textContent = name;
-          visitorList.appendChild(pill);
-        });
-      } else {
-        visitorList.innerHTML = '<span class="visitor-pill">Abhi koi nahi aaya</span>';
-      }
-    })
-    .catch(function () {
-      visitorList.innerHTML = '<span class="visitor-pill">Load nahi ho paaya</span>';
-    });
+  loadJSONP(scriptURL + '?action=visitors', function (data) {
+    visitorList.innerHTML = '';
+    if (data.visitors && data.visitors.length) {
+      data.visitors.forEach(function (name) {
+        var pill = document.createElement('span');
+        pill.className = 'visitor-pill';
+        pill.textContent = name;
+        visitorList.appendChild(pill);
+      });
+    } else {
+      visitorList.innerHTML = '<span class="visitor-pill">Abhi koi nahi aaya</span>';
+    }
+  }, function () {
+    visitorList.innerHTML = '<span class="visitor-pill">Load nahi ho paaya</span>';
+  });
 
   // LOAD HALL OF FAME ("Akhand Backchodi")
   var fameList = document.getElementById('fameList');
 
   function loadFame() {
-    fetch(scriptURL + '?action=cheers')
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        fameList.innerHTML = '';
-        if (data.entries && data.entries.length) {
-          data.entries.forEach(function (entry) {
-            var div = document.createElement('div');
-            div.className = 'fame-entry';
-            var text = '<b>' + entry.name + '</b> raised a ' + entry.peg + ' wala glass';
-            if (entry.message) {
-              text += ': "' + entry.message + '"';
-            } else {
-              text += '!';
-            }
-            div.innerHTML = text;
-            fameList.appendChild(div);
-          });
-        } else {
-          fameList.innerHTML = '<div class="fame-entry">Koi cheers nahi aaya abhi tak — pehla tu ban!</div>';
-        }
-      })
-      .catch(function () {
-        fameList.innerHTML = '<div class="fame-entry">Load nahi ho paaya</div>';
-      });
+    loadJSONP(scriptURL + '?action=cheers', function (data) {
+      fameList.innerHTML = '';
+      if (data.entries && data.entries.length) {
+        data.entries.forEach(function (entry) {
+          var div = document.createElement('div');
+          div.className = 'fame-entry';
+          var text = '<b>' + entry.name + '</b> raised a ' + entry.peg + ' wala glass';
+          if (entry.message) {
+            text += ': "' + entry.message + '"';
+          } else {
+            text += '!';
+          }
+          div.innerHTML = text;
+          fameList.appendChild(div);
+        });
+      } else {
+        fameList.innerHTML = '<div class="fame-entry">Koi cheers nahi aaya abhi tak — pehla tu ban!</div>';
+      }
+    }, function () {
+      fameList.innerHTML = '<div class="fame-entry">Load nahi ho paaya</div>';
+    });
   }
 
   loadFame();
