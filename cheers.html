@@ -24,22 +24,24 @@
 <style>
 
   h1.page-title {
-    font-size: 22px;
-    margin: 0 0 4px;
+    font-size: clamp(28px, 4vw, 44px);
+    margin: 0 0 8px;
     color: #ffe0a6;
     font-weight: 600;
+    text-align: center;
   }
 
   .welcome-line {
-    font-size: 14px;
-    color: rgba(242,229,207,0.75);
+    font-size: 16px;
+    color: rgba(242,229,207,0.8);
     margin: 0 0 22px;
+    text-align: center;
   }
 
   .top-title-row {
     max-width: 1180px;
     margin: 0 auto;
-    padding: 28px 24px 0;
+    padding: 32px 24px 0;
   }
 
   /* RETRO TV */
@@ -190,13 +192,13 @@
   <div class="nav-right">
     <a href="index.html">Scene bata</a>
     <a href="#" id="whatsappLink">Doston ko bhi bula!</a>
-    <a class="leave-link" id="leaveTrigger">Nikalu 🚪</a>
+    <a class="leave-link" id="leaveTrigger">Chal nikalta hoon 🚪</a>
   </div>
 </div>
 
 <div class="top-title-row">
-  <h1 class="page-title">Cheers! 🍻</h1>
-  <p class="welcome-line" id="welcomeLine">Tera peg lag gaya bar mein.</p>
+  <h1 class="page-title" id="cheersHeading">Cheers, Yaar!</h1>
+  <p class="welcome-line">Tera peg ready hai.</p>
 </div>
 
 <div class="split-wrap">
@@ -223,27 +225,21 @@
   <div>
 
     <div class="glass-card">
-      <h2>Naye Yaar</h2>
+      <h2>Bajuwale table pe kaun hai?</h2>
       <div class="visitor-list" id="visitorList">
-        <span class="visitor-pill">Rohan</span>
-        <span class="visitor-pill">Priya</span>
-        <span class="visitor-pill">Kunal</span>
-        <span class="visitor-pill">Aisha</span>
-        <span class="visitor-pill">Vikram</span>
+        <span class="visitor-pill">Loading...</span>
       </div>
     </div>
 
     <div class="glass-card">
-      <h2>🏆 Hall of Fame</h2>
+      <h2>🥂 Akhand Backchodi</h2>
       <div id="fameList">
-        <div class="fame-entry"><b>Shalaka from Mumbai</b> raised a Rum wala glass: "Kya baat hai!"</div>
-        <div class="fame-entry"><b>Aditya from Pune</b> raised a Whisky wala glass: "Bas ek aur!"</div>
-        <div class="fame-entry"><b>Meera from Delhi</b> raised a Wine wala glass: "Cheers to Friday!"</div>
+        <div class="fame-entry">Loading...</div>
       </div>
     </div>
 
     <div class="glass-card">
-      <h2>Apna Cheers Bhejo</h2>
+      <h2>Backchodi rukni nahi chahiye!</h2>
       <form id="cheersForm">
 
         <!-- Fallback name field, only shown if we don't already know the visitor's name -->
@@ -268,9 +264,9 @@
           </div>
         </div>
 
-        <textarea id="cheersMessage" placeholder="Koi short message? (optional)"></textarea>
+        <textarea id="cheersMessage" placeholder="Tu bhi kar..."></textarea>
 
-        <button type="submit" class="submit-btn">CHEERS KARO 🥂</button>
+        <button type="submit" class="submit-btn">AB CHEERS KAR! 🥂</button>
 
       </form>
     </div>
@@ -303,18 +299,75 @@
   document.getElementById('whatsappLink').href =
     "https://wa.me/?text=" + encodeURIComponent(waMessage);
 
+  // BACKEND URL (same Apps Script project as the home page form)
+  var scriptURL = "https://script.google.com/macros/s/AKfycbx2p_ALGkRuen-UMSvC547Ij6eaTN5XPBO5mfJac2eH0nEUnZsSsiorvbum4qUurpwg/exec";
+
   // RETRIEVE NAME FROM HOME PAGE (localStorage, same-origin)
   var savedName = localStorage.getItem('piyoName');
   var cheersNameInput = document.getElementById('cheersName');
+  var cheersHeading = document.getElementById('cheersHeading');
 
   if (savedName) {
-    document.getElementById('welcomeLine').textContent =
-      "Tera peg lag gaya bar mein, " + savedName + "!";
+    cheersHeading.textContent = "Cheers, " + savedName + "!";
   } else {
     // No name on file (e.g. visited Cheers directly) — show the fallback field
     cheersNameInput.style.display = 'block';
     cheersNameInput.required = true;
   }
+
+  // LOAD VISITOR LIST ("Bajuwale table pe kaun hai?")
+  var visitorList = document.getElementById('visitorList');
+
+  fetch(scriptURL + '?action=visitors')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      visitorList.innerHTML = '';
+      if (data.visitors && data.visitors.length) {
+        data.visitors.forEach(function (name) {
+          var pill = document.createElement('span');
+          pill.className = 'visitor-pill';
+          pill.textContent = name;
+          visitorList.appendChild(pill);
+        });
+      } else {
+        visitorList.innerHTML = '<span class="visitor-pill">Abhi koi nahi aaya</span>';
+      }
+    })
+    .catch(function () {
+      visitorList.innerHTML = '<span class="visitor-pill">Load nahi ho paaya</span>';
+    });
+
+  // LOAD HALL OF FAME ("Akhand Backchodi")
+  var fameList = document.getElementById('fameList');
+
+  function loadFame() {
+    fetch(scriptURL + '?action=cheers')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        fameList.innerHTML = '';
+        if (data.entries && data.entries.length) {
+          data.entries.forEach(function (entry) {
+            var div = document.createElement('div');
+            div.className = 'fame-entry';
+            var text = '<b>' + entry.name + '</b> raised a ' + entry.peg + ' wala glass';
+            if (entry.message) {
+              text += ': "' + entry.message + '"';
+            } else {
+              text += '!';
+            }
+            div.innerHTML = text;
+            fameList.appendChild(div);
+          });
+        } else {
+          fameList.innerHTML = '<div class="fame-entry">Koi cheers nahi aaya abhi tak — pehla tu ban!</div>';
+        }
+      })
+      .catch(function () {
+        fameList.innerHTML = '<div class="fame-entry">Load nahi ho paaya</div>';
+      });
+  }
+
+  loadFame();
 
   // AMBIENCE TOGGLE
   var ambBtn = document.getElementById('piyoAmbienceBtn');
@@ -371,21 +424,50 @@
 
   });
 
-  // CHEERS FORM (placeholder — backend wiring comes next phase)
+  // CHEERS FORM — real submission
   var cheersForm = document.getElementById('cheersForm');
+  var cheersSubmitBtn = cheersForm.querySelector('.submit-btn');
+
   cheersForm.addEventListener('submit', function (e) {
     e.preventDefault();
+
     var nameToUse = savedName || cheersNameInput.value;
+    var pegVal = cheersForm.querySelector('input[name="cpeg"]:checked');
+    pegVal = pegVal ? pegVal.value : '';
+    var messageVal = document.getElementById('cheersMessage').value;
 
-    var placeholderMsg = document.createElement('div');
-    placeholderMsg.style.cssText = 'margin-top:14px; padding:12px; border:1px solid #dda14b; background:rgba(105,65,25,0.35); color:#ffe0a6; font-size:14px; text-align:center; border-radius:3px;';
-    placeholderMsg.textContent = 'Cheers backend coming soon — would submit as: ' + nameToUse;
+    cheersSubmitBtn.disabled = true;
+    cheersSubmitBtn.textContent = "Ek sec...";
 
-    var existing = cheersForm.parentNode.querySelector('.placeholder-msg');
-    if (existing) existing.remove();
+    var formData = new FormData();
+    formData.append('type', 'cheers');
+    formData.append('name', nameToUse);
+    formData.append('peg', pegVal);
+    formData.append('message', messageVal);
 
-    placeholderMsg.className = 'placeholder-msg';
-    cheersForm.parentNode.appendChild(placeholderMsg);
+    fetch(scriptURL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors',
+      keepalive: true
+    }).catch(function () {}).finally(function () {
+
+      // Optimistically add this entry to the top of the Hall of Fame
+      var div = document.createElement('div');
+      div.className = 'fame-entry';
+      var text = '<b>' + nameToUse + '</b> raised a ' + pegVal + ' wala glass';
+      text += messageVal ? ': "' + messageVal + '"' : '!';
+      div.innerHTML = text;
+
+      if (fameList.firstChild && fameList.firstChild.textContent.indexOf('Koi cheers nahi') !== -1) {
+        fameList.innerHTML = '';
+      }
+      fameList.insertBefore(div, fameList.firstChild);
+
+      cheersForm.reset();
+      cheersSubmitBtn.disabled = false;
+      cheersSubmitBtn.textContent = "AB CHEERS KAR! 🥂";
+    });
   });
 
 </script>
