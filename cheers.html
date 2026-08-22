@@ -7,6 +7,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PIYO.BAR — Cheers</title>
 
+<link rel="icon" type="image/png" href="favicon-512.png">
+
+<!-- Open Graph / WhatsApp preview -->
+<meta property="og:title" content="PIYO.BAR — Cheers">
+<meta property="og:description" content="Tera peg lag gaya bar mein! Aa ja PIYO.BAR pe cheers karne.">
+<meta property="og:image" content="https://shalakaofficial.github.io/PIYO.BAR/favicon-512.png">
+<meta property="og:url" content="https://shalakaofficial.github.io/PIYO.BAR/cheers.html">
+<meta property="og:type" content="website">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
@@ -175,18 +184,19 @@
 
 <div class="nav">
   <div class="nav-left">
+    <img src="favicon-512.png" alt="PIYO.BAR" class="logo">
     <div class="nav-title">PIYO.BAR</div>
   </div>
   <div class="nav-right">
     <a href="index.html">Scene bata</a>
     <a href="#" id="whatsappLink">Doston ko bhi bula!</a>
-    <a class="leave-link" id="leaveTrigger">Chal, Nikalta Hoon.🚪</a>
+    <a class="leave-link" id="leaveTrigger">Nikalu 🚪</a>
   </div>
 </div>
 
 <div class="top-title-row">
   <h1 class="page-title">Cheers! 🍻</h1>
-  <p class="welcome-line" id="welcomeLine">Tera peg ready hai.</p>
+  <p class="welcome-line" id="welcomeLine">Tera peg lag gaya bar mein.</p>
 </div>
 
 <div class="split-wrap">
@@ -213,7 +223,7 @@
   <div>
 
     <div class="glass-card">
-      <h2>Akela kahan hai tu? Tere naye yaar bhi toh hai. </h2>
+      <h2>Naye Yaar</h2>
       <div class="visitor-list" id="visitorList">
         <span class="visitor-pill">Rohan</span>
         <span class="visitor-pill">Priya</span>
@@ -224,7 +234,7 @@
     </div>
 
     <div class="glass-card">
-      <h2>Backchodi Rukni Nahi Chahiye.</h2>
+      <h2>🏆 Hall of Fame</h2>
       <div id="fameList">
         <div class="fame-entry"><b>Shalaka from Mumbai</b> raised a Rum wala glass: "Kya baat hai!"</div>
         <div class="fame-entry"><b>Aditya from Pune</b> raised a Whisky wala glass: "Bas ek aur!"</div>
@@ -233,7 +243,7 @@
     </div>
 
     <div class="glass-card">
-      <h2>Tu bhi kar le Cheers</h2>
+      <h2>Apna Cheers Bhejo</h2>
       <form id="cheersForm">
 
         <!-- Fallback name field, only shown if we don't already know the visitor's name -->
@@ -258,9 +268,9 @@
           </div>
         </div>
 
-        <textarea id="cheersMessage" placeholder="Backchodi kar..."></textarea>
+        <textarea id="cheersMessage" placeholder="Koi short message? (optional)"></textarea>
 
-        <button type="submit" class="submit-btn">CHEERS 🥂</button>
+        <button type="submit" class="submit-btn">CHEERS KARO 🥂</button>
 
       </form>
     </div>
@@ -278,10 +288,10 @@
 <!-- LEAVE MODAL -->
 <div class="modal-overlay" id="leaveModal">
   <div class="modal-box" id="leaveModalContent">
-    <p>Arre bhai, itani jaldi? Ek last peg pi le yaar!</p>
+    <p>Itani jaldi? Ek last peg pi le yaar!</p>
     <div class="modal-buttons">
-      <button class="btn-stay" id="stayBtn">Theek hai..</button>
-      <button class="btn-go" id="goBtn">Naah bro, Ma/Maal maregi!</button>
+      <button class="btn-stay" id="stayBtn">Ok, one last...</button>
+      <button class="btn-go" id="goBtn">Naah bro, gotta go!</button>
     </div>
   </div>
 </div>
@@ -343,7 +353,22 @@
   });
 
   goBtn.addEventListener('click', function () {
-    leaveModalContent.innerHTML = '<p style="font-size:20px; color:#ffe0a6;">Chal, koi na - kal baithenge! 🍻</p>';
+
+    // Hide the normal page content, replace with a full-screen
+    // goodbye message over the background image
+    document.querySelector('.nav').style.display = 'none';
+    document.querySelector('.top-title-row').style.display = 'none';
+    document.querySelector('.split-wrap').style.display = 'none';
+    document.getElementById('piyoAmbienceBtn').style.display = 'none';
+
+    leaveModal.innerHTML =
+      '<div style="text-align:center;">' +
+        '<p style="font-size:26px; color:#ffe0a6; margin:0;">Ok then,</p>' +
+        '<p style="font-size:26px; color:#ffe0a6; margin:8px 0 0;">tomorrow — same place, same time! 🍻</p>' +
+      '</div>';
+
+    leaveModal.style.background = 'transparent';
+
   });
 
   // CHEERS FORM (placeholder — backend wiring comes next phase)
@@ -351,7 +376,16 @@
   cheersForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var nameToUse = savedName || cheersNameInput.value;
-    alert('Cheers backend not wired up yet — would submit as: ' + nameToUse);
+
+    var placeholderMsg = document.createElement('div');
+    placeholderMsg.style.cssText = 'margin-top:14px; padding:12px; border:1px solid #dda14b; background:rgba(105,65,25,0.35); color:#ffe0a6; font-size:14px; text-align:center; border-radius:3px;';
+    placeholderMsg.textContent = 'Cheers backend coming soon — would submit as: ' + nameToUse;
+
+    var existing = cheersForm.parentNode.querySelector('.placeholder-msg');
+    if (existing) existing.remove();
+
+    placeholderMsg.className = 'placeholder-msg';
+    cheersForm.parentNode.appendChild(placeholderMsg);
   });
 
 </script>
