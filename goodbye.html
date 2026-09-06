@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIYO.BAR</title>
+
+<link rel="icon" type="image/png" href="favicon-512.png">
+
+<!-- Open Graph / WhatsApp preview -->
+<meta property="og:title" content="PIYO.BAR">
+<meta property="og:description" content="Ok then, tomorrow — same place, same time! 🍻">
+<meta property="og:image" content="https://shalakaofficial.github.io/PIYO.BAR/favicon-512.png">
+<meta property="og:url" content="https://shalakaofficial.github.io/PIYO.BAR/goodbye.html">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+  .tagline {
+    font-size: clamp(30px, 3.2vw, 52px);
+    line-height: 1.35;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  .tagline .highlight {
+    color: #17110d;
+    background: #f2e5cf;
+    padding: 2px 8px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .tagline .accent {
+    color: #17110d;
+    background: #dda14b;
+    padding: 2px 8px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .thanks-note {
+    text-align: center;
+    font-size: 18px;
+    color: #ffe0a6;
+    padding: 10px 0;
+  }
+
+  @media (max-width: 600px) {
+    .tagline { font-size: 30px; }
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="nav-left">
+    <img src="favicon-512.png" alt="PIYO.BAR" class="logo">
+    <div class="nav-title">PIYO.BAR</div>
+  </div>
+</div>
+
+<div class="split-wrap">
+
+  <!-- LEFT: GOODBYE MESSAGE -->
+  <div>
+    <div class="tagline">
+      <span class="highlight">Ok then,</span><br>
+      <span class="accent">tomorrow — same place, same time! 🍻</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: FEEDBACK FORM -->
+  <div class="glass-card" id="feedbackCard">
+
+    <h2>Jaane se pehle...</h2>
+
+    <form id="feedbackForm">
+
+      <textarea id="feedback" name="feedback" placeholder="Any feedback or farmaish for next time?"></textarea>
+
+      <input type="email" id="email" name="email" placeholder="Email Address">
+
+      <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp Number" pattern="[0-9+ ]{10,15}">
+
+      <button type="submit" id="submitBtn" class="submit-btn">CHAL, BHEJ DE 📮</button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+
+  var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
+
+  var form = document.getElementById('feedbackForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var card = document.getElementById('feedbackCard');
+
+  form.addEventListener('submit', function (e) {
+
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Ek sec...";
+
+    var formData = new FormData(form);
+    formData.append('type', 'feedback');
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors',
+      keepalive: true
+    }).catch(function () {}).finally(function () {
+      card.innerHTML = '<p class="thanks-note">Thanks yaar, milte hain agli baar! 🍻</p>';
+    });
+
+  });
+
+</script>
+
+</body>
+</html>
