@@ -187,7 +187,7 @@ h1.page-title {
 /* HALL OF FAME — glass card, on-theme instead of a literal chalkboard */
 /* Capped + scrollable so the page doesn't stretch as entries pile up */
 #fameList {
-  max-height: 280px;
+  max-height: 260px;
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -447,10 +447,6 @@ if (savedName) {
 // BACKEND URL (same Apps Script project as the home page form)
 var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
 
-// Max number of cheers entries to show at once (older ones stay in the sheet,
-// just not rendered — the card scrolls internally instead of stretching the page)
-var MAX_FAME_ENTRIES = 10;
-
 // LOAD VISITOR LIST ("Bajuwale table pe kaun hai?")
 var visitorList = document.getElementById('visitorList');
 loadJSONP(scriptURL + '?action=visitors', function (data) {
@@ -469,13 +465,14 @@ loadJSONP(scriptURL + '?action=visitors', function (data) {
   visitorList.innerHTML = '<span class="visitor-pill">Load nahi ho paaya</span>';
 });
 
-// LOAD HALL OF FAME ("Akhand Backchodi") — latest MAX_FAME_ENTRIES only
+// LOAD HALL OF FAME ("Akhand Backchodi") — all entries; the card itself
+// scrolls after ~5-6 rows instead of stretching the page (see #fameList CSS)
 var fameList = document.getElementById('fameList');
 function loadFame() {
   loadJSONP(scriptURL + '?action=cheers', function (data) {
     fameList.innerHTML = '';
     if (data.entries && data.entries.length) {
-      data.entries.slice(0, MAX_FAME_ENTRIES).forEach(function (entry) {
+      data.entries.forEach(function (entry) {
         var div = document.createElement('div');
         div.className = 'fame-entry';
         var text = '<b>' + entry.name + '</b> raised a ' + entry.peg + ' wala glass';
@@ -586,11 +583,6 @@ cheersForm.addEventListener('submit', function (e) {
       fameList.innerHTML = '';
     }
     fameList.insertBefore(div, fameList.firstChild);
-
-    // Keep the visible list capped at MAX_FAME_ENTRIES
-    while (fameList.children.length > MAX_FAME_ENTRIES) {
-      fameList.removeChild(fameList.lastChild);
-    }
 
     cheersForm.reset();
     cheersSubmitBtn.disabled = false;
