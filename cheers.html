@@ -230,12 +230,14 @@
   <!-- RIGHT: VISITOR LIST + HALL OF FAME + FORM -->
   <div>
 
+    <!-- HIDDEN FOR NOW — uncomment to bring back "Bajuwale table pe kaun hai?"
     <div class="glass-card">
       <h2>Bajuwale table pe kaun hai?</h2>
       <div class="visitor-list" id="visitorList">
         <span class="visitor-pill">Loading...</span>
       </div>
     </div>
+    -->
 
     <div class="glass-card">
       <h2>🥂 Akhand Backchodi</h2>
@@ -361,7 +363,8 @@
   // BACKEND URL (same Apps Script project as the home page form)
   var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
 
-  // LOAD VISITOR LIST ("Bajuwale table pe kaun hai?")
+  // LOAD VISITOR LIST ("Bajuwale table pe kaun hai?") — HIDDEN FOR NOW, uncomment along with the HTML block above to bring back
+  /*
   var visitorList = document.getElementById('visitorList');
 
   loadJSONP(scriptURL + '?action=visitors', function (data) {
@@ -379,6 +382,7 @@
   }, function () {
     visitorList.innerHTML = '<span class="visitor-pill">Load nahi ho paaya</span>';
   });
+  */
 
   // LOAD HALL OF FAME ("Akhand Backchodi")
   var fameList = document.getElementById('fameList');
