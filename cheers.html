@@ -71,10 +71,15 @@
     background-color: #17110d;
   }
 
+  .nav, .split-wrap {
+    position: relative;
+    z-index: 2;
+  }
+
   #sceneBgWrap {
     position: fixed;
     inset: 0;
-    z-index: -2;
+    z-index: 0;
     background: #17110d;
   }
 
@@ -97,7 +102,7 @@
     position: fixed;
     border: none;
     background: #000;
-    z-index: -1;
+    z-index: 1;
   }
 
   /* VISITOR PILLS */
