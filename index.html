@@ -50,7 +50,7 @@
     font-size: 13px;
     color: #cbbba4;
     opacity: 0.85;
-    margin: -6px 0 20px 2px;
+    margin: -6px 0 8px 2px;
     line-height: 1.4;
   }
 
@@ -93,9 +93,13 @@
 
       <input type="text" id="city" name="city" placeholder="Kahan se ho?" required>
 
-      <input type="email" id="email" name="email" placeholder="Email ka Address?" required>
+      <input type="email" id="email" name="email" placeholder="Email ka Address?"
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+        title="Enter a valid email address (e.g. name@gmail.com)" required>
 
-      <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp ka Number?" pattern="[0-9+ ]{10,15}" required>
+      <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp ka Number?"
+        pattern="[0-9]{10}" maxlength="10" inputmode="numeric"
+        title="Enter a valid 10-digit number" required>
 
       <p class="privacy-note">Bro, tension na le, spam nahi karenge. Bas party ka invitation bhejenge!</p>
 
