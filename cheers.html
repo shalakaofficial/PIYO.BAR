@@ -1,426 +1,638 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PIYO.BAR — Cheers</title>
+<link rel="icon" type="image/png" href="favicon-512.png">
+
+<!-- Open Graph / WhatsApp preview -->
 <meta property="og:title" content="PIYO.BAR — Cheers">
 <meta property="og:description" content="Tera peg lag gaya bar mein! Aa ja PIYO.BAR pe cheers karne.">
 <meta property="og:image" content="https://shalakaofficial.github.io/PIYO.BAR/favicon-512.png">
-<meta property="og:type" content="website">
 <meta property="og:url" content="https://shalakaofficial.github.io/PIYO.BAR/cheers.html">
+<meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
 <style>
-  :root{
-    --ink-950:#160f0a;
-    --ink-900:#1d140d;
-    --panel:#271b12;
-    --panel-2:#31221664;
-    --wood:#8a5a34;
-    --wood-dark:#5c3b22;
-    --cream:#f4e9d8;
-    --muted:#c9b39b;
-    --amber:#ffb238;
-    --amber-dim:#c7862a;
-    --teal:#3fb8a4;
-    --line:#4a382755;
-    --radius-lg: 22px;
-    --radius-md: 14px;
-    --maxw: 760px;
-  }
+h1.page-title {
+  font-size: clamp(28px, 4vw, 44px);
+  margin: 0 0 8px;
+  color: #ffe0a6;
+  font-weight: 600;
+  text-align: center;
+}
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:
-      radial-gradient(90% 60% at 50% -10%, #3a2718 0%, transparent 60%),
-      radial-gradient(120% 90% at 50% 110%, #23150c 0%, transparent 55%),
-      var(--ink-950);
-    color:var(--cream);
-    font-family:'Manrope', sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
+.welcome-line {
+  font-size: 16px;
+  color: rgba(242,229,207,0.8);
+  margin: 0 0 22px;
+  text-align: center;
+}
 
-  h1,h2,.display{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
-    margin:0;
-  }
+.top-title-row {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
 
-  a{color:inherit;}
-  button{font-family:inherit;}
+/* Override the home page's vertical-centering behavior —
+   on Cheers we want the TV and cards to start flush at the top */
+.split-wrap {
+  align-items: start !important;
+  align-content: start !important;
+}
 
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px;}
+/* RETRO TV — warm wood cabinet console, cream screen frame style */
+.tv {
+  background: linear-gradient(160deg, #8b5a35 0%, #6b4226 50%, #4a2d18 100%);
+  border-radius: 14px;
+  padding: 22px 22px 4px;
+  box-shadow:
+    0 14px 32px rgba(0,0,0,0.5),
+    inset 0 0 0 2px rgba(0,0,0,0.15),
+    inset 0 2px 8px rgba(255,255,255,0.12);
+  position: relative;
+}
 
-  /* ---------- Nav ---------- */
-  header.topbar{
-    position:sticky; top:0; z-index:40;
-    background:linear-gradient(#160f0aee, #160f0ad0 70%, transparent);
-    backdrop-filter: blur(6px);
-    border-bottom:1px solid var(--line);
-  }
-  .topbar-inner{
-    max-width:var(--maxw); margin:0 auto; padding:14px 20px;
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-  }
-  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
-  .brand img{width:30px; height:30px; border-radius:8px; display:block;}
-  .brand span{font-family:'Fraunces', serif; font-weight:700; font-size:1.05rem; color:var(--cream);}
-  nav.links{display:flex; align-items:center; gap:18px; font-size:.9rem;}
-  nav.links a, nav.links button.linklike{
-    color:var(--muted); text-decoration:none; background:none; border:0; cursor:pointer;
-    font-size:.9rem; padding:0; font-family:'Manrope', sans-serif;
-  }
-  nav.links a:hover, nav.links button.linklike:hover{color:var(--cream);}
+/* Top highlight sheen suggesting varnished wood */
+.tv::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 8%;
+  width: 84%;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), transparent);
+  border-radius: 14px 14px 50% 50%;
+  pointer-events: none;
+}
 
-  /* ---------- Hero ---------- */
-  .hero{padding:56px 20px 8px; text-align:center;}
-  .hero h1{font-size:clamp(2.4rem, 6vw, 3.4rem); color:var(--cream);}
-  .hero p{margin:10px 0 0; color:var(--muted); font-size:1.05rem;}
+/* Small knob perched on top of the cabinet */
+.tv-top-knob {
+  position: absolute;
+  top: -13px;
+  right: 52px;
+  width: 22px;
+  height: 18px;
+  background: linear-gradient(160deg, #2b2118, #17110c);
+  clip-path: polygon(22% 100%, 78% 100%, 100% 0, 0 0);
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
 
-  /* ---------- Retro TV ---------- */
-  .tv-section{padding:38px 20px 10px; display:flex; flex-direction:column; align-items:center;}
-  .tv-wrap{
-    position:relative;
-    width:100%;
-    max-width:600px;
-    aspect-ratio:600/327;
-    filter: drop-shadow(0 30px 40px rgba(0,0,0,.55));
-  }
-  .tv-wrap .screen{
-    position:absolute;
-    left:28.3%; top:21.5%; width:35%; height:49.8%;
-    border-radius:6% / 9%;
-    overflow:hidden;
-    background:#000;
-    box-shadow: inset 0 0 30px rgba(0,0,0,.6);
-  }
-  .tv-wrap .screen iframe{
-    width:100%; height:100%; border:0; display:block;
-  }
-  .tv-wrap img.frame{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    z-index:2;
-    pointer-events:none;
-    user-select:none;
-  }
-  .tv-caption{
-    margin-top:16px;
-    font-family:'Fraunces', serif;
-    letter-spacing:.06em;
-    color:var(--amber);
-    font-size:.95rem;
-  }
+.tv-body {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+}
 
-  /* ---------- Sections / cards ---------- */
-  section.block{padding:34px 20px;}
-  .card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:var(--radius-lg);
-    padding:22px 22px;
-  }
-  .card + .card{margin-top:16px;}
-  .block h2{font-size:1.35rem; color:var(--cream); margin-bottom:10px;}
-  .block p.sub{color:var(--muted); margin:0 0 16px; font-size:.95rem;}
+/* Cream/wood bezel around the screen */
+.tv-bezel {
+  flex: 1;
+  min-width: 0;
+  background: linear-gradient(160deg, #ddb87a, #b8863f 60%, #96652a);
+  border-radius: 34px / 26px;
+  padding: 14px;
+  box-shadow:
+    inset 0 0 0 2px rgba(0,0,0,0.2),
+    inset 0 2px 6px rgba(255,255,255,0.18);
+}
 
-  .table-empty{
-    display:flex; align-items:center; gap:14px;
-    color:var(--muted); font-size:.98rem;
-  }
-  .table-empty .dot{
-    width:10px; height:10px; border-radius:50%;
-    background:var(--teal); flex:none;
-    box-shadow:0 0 0 4px #3fb8a422;
-  }
-  .invite-btn{
-    margin-top:14px;
-    display:inline-flex; align-items:center; gap:8px;
-    background:transparent; color:var(--teal);
-    border:1px solid #3fb8a466; border-radius:999px;
-    padding:9px 16px; font-weight:600; font-size:.88rem;
-    cursor:pointer;
-  }
-  .invite-btn:hover{background:#3fb8a41a;}
+.tv-screen {
+  background: #000;
+  border-radius: 24px / 18px;
+  overflow: hidden;
+  border: 2px solid #0a0a0a;
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+}
 
-  #rantForm{display:flex; gap:8px; margin-bottom:16px;}
-  #rantInput{
-    flex:1; background:var(--ink-900); border:1px solid var(--line);
-    color:var(--cream); border-radius:10px; padding:11px 14px; font-size:.92rem;
-  }
-  #rantInput::placeholder{color:#8a7863;}
-  #rantForm button{
-    background:var(--amber); color:#241708; border:0; border-radius:10px;
-    padding:0 18px; font-weight:700; cursor:pointer;
-  }
-  #rantList{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
-  #rantList li{
-    background:var(--ink-900); border:1px solid var(--line);
-    border-radius:10px; padding:10px 14px; font-size:.92rem; color:var(--cream);
-  }
-  #rantList .empty{color:var(--muted); font-style:italic; background:transparent; border:none; padding:0;}
+.tv-screen iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
 
-  /* Drink chips */
-  .chip-row{display:flex; flex-wrap:wrap; gap:10px;}
-  .chip{
-    background:var(--ink-900); border:1px solid var(--line);
-    color:var(--cream); border-radius:999px; padding:10px 18px;
-    font-size:.95rem; cursor:pointer; transition:border-color .15s, background .15s;
-  }
-  .chip.active{border-color:var(--amber); background:#3a2712; color:var(--amber);}
+/* Right-hand side panel: dials, speaker mesh, indicator switches */
+.tv-side-panel {
+  width: 68px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 14px;
+}
 
-  .cheers-cta{
-    display:block; width:100%; margin-top:22px;
-    background:linear-gradient(180deg,#ffc25a,var(--amber-dim));
-    color:#241708; border:0; border-radius:16px;
-    padding:16px 20px; font-size:1.15rem; font-weight:800;
-    cursor:pointer; letter-spacing:.01em;
-    box-shadow:0 10px 24px #ffb2382e;
-  }
-  .cheers-cta:active{transform:translateY(1px);}
+.tv-dial {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #ecd08c, #b1873f 55%, #6e4a1f 100%);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6), inset 0 0 0 2px rgba(0,0,0,0.3);
+  position: relative;
+}
 
-  /* ---------- Ambience toggle ---------- */
-  .ambience-btn{
-    position:fixed; right:18px; bottom:18px; z-index:50;
-    width:52px; height:52px; border-radius:50%;
-    background:var(--panel); border:1px solid var(--line);
-    color:var(--cream); font-size:1.3rem;
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.4);
-  }
+.tv-dial::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 2px;
+  height: 11px;
+  background: #2b1c0e;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
 
-  footer{padding:30px 20px 50px; text-align:center; color:#7a6a56; font-size:.82rem;}
+.tv-dial.small {
+  width: 28px;
+  height: 28px;
+}
 
-  /* ---------- Exit modal ---------- */
-  .modal-backdrop{
-    position:fixed; inset:0; background:#0d0805cc;
-    display:none; align-items:center; justify-content:center;
-    z-index:100; padding:20px;
-  }
-  .modal-backdrop.open{display:flex;}
-  .modal{
-    background:var(--panel); border:1px solid var(--line);
-    border-radius:var(--radius-lg); padding:28px 26px;
-    max-width:380px; width:100%; text-align:center;
-  }
-  .modal h2{font-size:1.4rem; margin-bottom:8px;}
-  .modal p{color:var(--muted); margin:0 0 20px; font-size:.95rem;}
-  .modal .row{display:flex; gap:10px; flex-direction:column;}
-  .modal button{
-    border-radius:12px; padding:12px 16px; font-weight:700; font-size:.95rem; cursor:pointer; border:0;
-  }
-  .modal .stay{background:var(--amber); color:#241708;}
-  .modal .go{background:transparent; color:var(--muted); border:1px solid var(--line);}
+.tv-speaker-grille {
+  width: 40px;
+  height: 34px;
+  background:
+    repeating-linear-gradient(0deg, #1c140c 0px, #1c140c 2px, #362415 2px, #362415 5px),
+    linear-gradient(160deg, #3a2717, #241a10);
+  border-radius: 4px;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.6);
+}
 
-  @media (max-width:480px){
-    .hero{padding:42px 16px 4px;}
-    section.block{padding:26px 16px;}
-    .card{padding:18px;}
-  }
+.tv-switches {
+  display: flex;
+  gap: 5px;
+}
+
+.tv-switches span {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  background: #c2483a;
+  box-shadow: 0 0 3px rgba(194,72,58,0.8);
+}
+
+/* Slim tapered legs + base shadow */
+.tv-stand {
+  height: 20px;
+  position: relative;
+  margin-top: 4px;
+}
+
+.tv-leg {
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 34px;
+  background: linear-gradient(160deg, #6b4226, #3a2717);
+  border-radius: 0 0 3px 3px;
+}
+
+.tv-leg.left {
+  left: 22%;
+  transform: rotate(9deg);
+}
+
+.tv-leg.right {
+  right: 22%;
+  transform: rotate(-9deg);
+}
+
+/* VISITOR PILLS */
+.visitor-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.visitor-pill {
+  background: rgba(105, 65, 25, 0.35);
+  border: 1px solid rgba(225, 180, 112, 0.3);
+  color: #ffc978;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* HALL OF FAME — glass card, on-theme instead of a literal chalkboard */
+/* Capped + scrollable so the page doesn't stretch as entries pile up */
+#fameList {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+#fameList::-webkit-scrollbar {
+  width: 6px;
+}
+#fameList::-webkit-scrollbar-thumb {
+  background: rgba(225, 180, 112, 0.4);
+  border-radius: 3px;
+}
+
+.fame-entry {
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(225,180,112,0.15);
+  color: #ecdfc8;
+}
+
+.fame-entry:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.fame-entry b { color: #ffc978; font-weight: 600; }
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+  background: rgba(23,17,13,0.95);
+  border: 1px solid #dda14b;
+  padding: 30px 26px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.modal-box p {
+  font-size: 17px;
+  margin: 0 0 20px;
+  color: #f2e5cf;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #dda14b;
+  font-family: "Lexend", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-stay {
+  background: #dda14b;
+  color: #17110d;
+}
+
+.btn-go {
+  background: transparent;
+  color: #f2e5cf;
+}
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="index.html">
-      <img src="favicon-512.png" alt="">
-      <span>PIYO.BAR</span>
-    </a>
-    <nav class="links">
-      <a href="index.html">Scene bata</a>
-      <button class="linklike" id="inviteNavBtn">Doston ko bhi bula!</button>
-      <button class="linklike" id="exitNavBtn">Chal nikalta hoon 🚪</button>
-    </nav>
+<div class="nav">
+  <div class="nav-left">
+    <img src="favicon-512.png" alt="PIYO.BAR" class="logo">
+    <div class="nav-title">PIYO.BAR</div>
   </div>
-</header>
+  <div class="nav-right">
+    <a href="index.html">Scene bata</a>
+    <a href="#" id="whatsappLink">Doston ko bhi bula!</a>
+    <a class="leave-link" id="leaveTrigger">Chal nikalta hoon 🚪</a>
+  </div>
+</div>
 
-<main>
-  <section class="hero wrap">
-    <h1>Cheers, Yaar!</h1>
-    <p>Tera peg ready hai.</p>
-  </section>
+<div class="top-title-row">
+  <h1 class="page-title" id="cheersHeading">Cheers, Yaar!</h1>
+  <p class="welcome-line">Tera peg ready hai.</p>
+</div>
 
-  <section class="tv-section">
-    <div class="tv-wrap">
-      <div class="screen">
-        <iframe
-          src="https://www.youtube.com/embed/videoseries?list=PLMPuaohVmr4A"
-          title="PIYO·VISION playlist"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+<div class="split-wrap">
+
+  <!-- LEFT: RETRO TV -->
+  <div>
+    <div class="tv">
+      <div class="tv-top-knob"></div>
+      <div class="tv-body">
+        <div class="tv-bezel">
+          <div class="tv-screen">
+            <iframe
+              src="https://www.youtube.com/embed/videoseries?list=PLMPuaohVmr4A"
+              title="PIYO.BAR Playlist"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <div class="tv-side-panel">
+          <div class="tv-dial"></div>
+          <div class="tv-dial small"></div>
+          <div class="tv-speaker-grille"></div>
+          <div class="tv-switches">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
-      <img class="frame" src="retro-tv.png" alt="Retro television frame">
+      <div class="tv-stand">
+        <div class="tv-leg left"></div>
+        <div class="tv-leg right"></div>
+      </div>
     </div>
-    <div class="tv-caption">PIYO·VISION</div>
-  </section>
+  </div>
 
-  <section class="block wrap">
-    <div class="card">
+  <!-- RIGHT: VISITOR LIST + HALL OF FAME + FORM -->
+  <div>
+    <div class="glass-card">
       <h2>Bajuwale table pe kaun hai?</h2>
-      <p class="sub">Abhi yeh table khaali hai — pehla round tera hai.</p>
-      <div class="table-empty">
-        <span class="dot"></span>
-        Sirf tu hai abhi. Kisi ko bula le, akela peene ka koi maza nahi.
+      <div class="visitor-list" id="visitorList">
+        <span class="visitor-pill">Loading...</span>
       </div>
-      <button class="invite-btn" id="inviteBtn">🔗 Table pe bula</button>
     </div>
-  </section>
 
-  <section class="block wrap">
-    <div class="card">
+    <div class="glass-card">
       <h2>🥂 Akhand Backchodi</h2>
-      <p class="sub">Yahan apni bakwaas chhod ja — sirf tere is browser mein dikhegi.</p>
-      <form id="rantForm">
-        <input id="rantInput" type="text" maxlength="140" placeholder="Kuch bol de yaar...">
-        <button type="submit">Bol</button>
-      </form>
-      <ul id="rantList"></ul>
-    </div>
-  </section>
-
-  <section class="block wrap">
-    <div class="card">
-      <h2>Backchodi rukni nahi chahiye!</h2>
-      <p class="sub">Apna peg chun le.</p>
-      <div class="chip-row" id="drinkChips">
-        <button class="chip" data-drink="rum">🥃 Rum</button>
-        <button class="chip" data-drink="whisky">🥃 Whisky</button>
-        <button class="chip" data-drink="beer">🍺 Beer</button>
-        <button class="chip" data-drink="wine">🍷 Wine</button>
+      <div id="fameList">
+        <div class="fame-entry">Loading...</div>
       </div>
-      <button class="cheers-cta" id="cheersBtn">AB CHEERS KAR! 🥂</button>
     </div>
-  </section>
 
-  <footer>PIYO.BAR — peeley likhee ki dukaan nahi, sirf mauj hai.</footer>
-</main>
+    <div class="glass-card">
+      <h2>Backchodi rukni nahi chahiye!</h2>
+      <form id="cheersForm">
+        <!-- Fallback name field, only shown if we don't already know the visitor's name -->
+        <input type="text" id="cheersName" placeholder="Tera naam?" style="display:none;">
 
-<button class="ambience-btn" id="ambienceBtn" aria-label="Toggle ambience sound">🔇</button>
-<audio id="ambienceAudio" loop preload="none">
+        <div class="peg-options">
+          <div class="option">
+            <input type="radio" id="c-rum" name="cpeg" value="Rum" required>
+            <label for="c-rum">🥃 Rum</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="c-whisky" name="cpeg" value="Whisky">
+            <label for="c-whisky">🥃 Whisky</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="c-beer" name="cpeg" value="Beer">
+            <label for="c-beer">🍺 Beer</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="c-wine" name="cpeg" value="Wine">
+            <label for="c-wine">🍷 Wine</label>
+          </div>
+        </div>
+
+        <textarea id="cheersMessage" placeholder="Tu bhi kar..."></textarea>
+        <button type="submit" class="submit-btn">AB CHEERS KAR! 🥂</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- AMBIENCE BUTTON -->
+<button id="piyoAmbienceBtn">🔇</button>
+<audio id="piyoAmbienceAudio" loop preload="none">
   <source src="https://github.com/shalakaofficial/PIYO.BAR/raw/refs/heads/main/Ambience%20Noise%20Option%203.mp3" type="audio/mpeg">
 </audio>
 
-<div class="modal-backdrop" id="exitModal">
-  <div class="modal">
-    <h2>Itani jaldi?</h2>
-    <p>Ek last peg pi le yaar!</p>
-    <div class="row">
-      <button class="stay" id="oneLastBtn">Ok, one last...</button>
-      <button class="go" id="gottaGoBtn">Naah bro, gotta go!</button>
+<!-- LEAVE MODAL -->
+<div class="modal-overlay" id="leaveModal">
+  <div class="modal-box" id="leaveModalContent">
+    <p>Itani jaldi? Ek last peg pi le yaar!</p>
+    <div class="modal-buttons">
+      <button class="btn-stay" id="stayBtn">Ok, one last...</button>
+      <button class="btn-go" id="goBtn">Naah bro, gotta go!</button>
     </div>
   </div>
 </div>
 
 <script>
-  // Ambience audio toggle
-  const ambienceBtn = document.getElementById('ambienceBtn');
-  const ambienceAudio = document.getElementById('ambienceAudio');
-  let playing = false;
-  ambienceBtn.addEventListener('click', () => {
-    if (!playing) {
-      ambienceAudio.volume = 0.5;
-      ambienceAudio.play().catch(() => {});
-      ambienceBtn.textContent = '🔊';
-    } else {
-      ambienceAudio.pause();
-      ambienceBtn.textContent = '🔇';
-    }
-    playing = !playing;
-  });
+// WHATSAPP LINK (same as home page)
+var waMessage = "Chal, ek peg maarte hain. Aa ja @ PIYO.BAR pe! https://www.piyo.bar 🥃";
+document.getElementById('whatsappLink').href =
+  "https://wa.me/?text=" + encodeURIComponent(waMessage);
 
-  // Invite / share
-  function inviteFriends() {
-    const shareData = {
-      title: 'PIYO.BAR',
-      text: 'Tera peg lag gaya bar mein! Aa ja PIYO.BAR pe cheers karne.',
-      url: window.location.href
-    };
-    if (navigator.share) {
-      navigator.share(shareData).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('Link copy ho gaya — doston ko bhej de!');
+// JSONP helper — bypasses CORS since Apps Script doesn't send the
+// headers a normal cross-origin fetch() needs to read the response
+function loadJSONP(url, onData, onError) {
+  var callbackName = 'piyoCb_' + Math.random().toString(36).slice(2);
+  var script = document.createElement('script');
+  var done = false;
+
+  var timeout = setTimeout(function () {
+    if (!done) {
+      done = true;
+      cleanup();
+      onError();
+    }
+  }, 8000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    delete window[callbackName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function (data) {
+    if (done) return;
+    done = true;
+    cleanup();
+    onData(data);
+  };
+
+  script.onerror = function () {
+    if (done) return;
+    done = true;
+    cleanup();
+    onError();
+  };
+
+  var sep = url.indexOf('?') > -1 ? '&' : '?';
+  script.src = url + sep + 'callback=' + callbackName;
+  document.head.appendChild(script);
+}
+
+// RETRIEVE NAME FROM HOME PAGE (localStorage, same-origin)
+var savedName = localStorage.getItem('piyoName');
+var cheersNameInput = document.getElementById('cheersName');
+var cheersHeading = document.getElementById('cheersHeading');
+
+if (savedName) {
+  cheersHeading.textContent = "Cheers, " + savedName + "!";
+} else {
+  // No name on file (e.g. visited Cheers directly) — show the fallback field
+  cheersNameInput.style.display = 'block';
+  cheersNameInput.required = true;
+}
+
+// BACKEND URL (same Apps Script project as the home page form)
+var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
+
+// LOAD VISITOR LIST ("Bajuwale table pe kaun hai?")
+var visitorList = document.getElementById('visitorList');
+loadJSONP(scriptURL + '?action=visitors', function (data) {
+  visitorList.innerHTML = '';
+  if (data.visitors && data.visitors.length) {
+    data.visitors.forEach(function (name) {
+      var pill = document.createElement('span');
+      pill.className = 'visitor-pill';
+      pill.textContent = name;
+      visitorList.appendChild(pill);
+    });
+  } else {
+    visitorList.innerHTML = '<span class="visitor-pill">Abhi koi nahi aaya</span>';
+  }
+}, function () {
+  visitorList.innerHTML = '<span class="visitor-pill">Load nahi ho paaya</span>';
+});
+
+// LOAD HALL OF FAME ("Akhand Backchodi") — all entries; the card itself
+// scrolls after ~5-6 rows instead of stretching the page (see #fameList CSS)
+var fameList = document.getElementById('fameList');
+function loadFame() {
+  loadJSONP(scriptURL + '?action=cheers', function (data) {
+    fameList.innerHTML = '';
+    if (data.entries && data.entries.length) {
+      data.entries.forEach(function (entry) {
+        var div = document.createElement('div');
+        div.className = 'fame-entry';
+        var text = '<b>' + entry.name + '</b> raised a ' + entry.peg + ' wala glass';
+        if (entry.message) {
+          text += ': "' + entry.message + '"';
+        } else {
+          text += '!';
+        }
+        div.innerHTML = text;
+        fameList.appendChild(div);
       });
+    } else {
+      fameList.innerHTML = '<div class="fame-entry">Koi cheers nahi aaya abhi tak — pehla tu ban!</div>';
     }
+  }, function () {
+    fameList.innerHTML = '<div class="fame-entry">Load nahi ho paaya</div>';
+  });
+}
+loadFame();
+
+// AMBIENCE TOGGLE
+var ambBtn = document.getElementById('piyoAmbienceBtn');
+var ambAudio = document.getElementById('piyoAmbienceAudio');
+var ambPlaying = false;
+
+ambBtn.addEventListener('click', function () {
+  if (!ambPlaying) {
+    ambAudio.volume = 0.4;
+    ambAudio.play().then(function () {
+      ambBtn.textContent = '🔊';
+      ambPlaying = true;
+    }).catch(function () {
+      ambBtn.textContent = '⚠️';
+    });
+  } else {
+    ambAudio.pause();
+    ambBtn.textContent = '🔇';
+    ambPlaying = false;
   }
-  document.getElementById('inviteBtn').addEventListener('click', inviteFriends);
-  document.getElementById('inviteNavBtn').addEventListener('click', inviteFriends);
+});
 
-  // Local rant board (per-browser only)
-  const rantForm = document.getElementById('rantForm');
-  const rantInput = document.getElementById('rantInput');
-  const rantList = document.getElementById('rantList');
-  const RANT_KEY = 'piyobar_rants';
+// LEAVE THE BAR MODAL
+var leaveTrigger = document.getElementById('leaveTrigger');
+var leaveModal = document.getElementById('leaveModal');
+var leaveModalContent = document.getElementById('leaveModalContent');
+var stayBtn = document.getElementById('stayBtn');
+var goBtn = document.getElementById('goBtn');
 
-  function loadRants() {
-    const rants = JSON.parse(localStorage.getItem(RANT_KEY) || '[]');
-    rantList.innerHTML = '';
-    if (rants.length === 0) {
-      const li = document.createElement('li');
-      li.className = 'empty';
-      li.textContent = 'Abhi tak koi backchodi nahi hui...';
-      rantList.appendChild(li);
-      return;
+leaveTrigger.addEventListener('click', function () {
+  leaveModal.classList.add('active');
+});
+
+stayBtn.addEventListener('click', function () {
+  leaveModal.classList.remove('active');
+});
+
+goBtn.addEventListener('click', function () {
+  // Hide the normal page content, replace with a full-screen
+  // goodbye message over the background image
+  document.querySelector('.nav').style.display = 'none';
+  document.querySelector('.top-title-row').style.display = 'none';
+  document.querySelector('.split-wrap').style.display = 'none';
+  document.getElementById('piyoAmbienceBtn').style.display = 'none';
+
+  leaveModal.innerHTML =
+    '<div style="text-align:center;">' +
+    '<p style="font-size:26px; color:#ffe0a6; margin:0;">Ok then,</p>' +
+    '<p style="font-size:26px; color:#ffe0a6; margin:8px 0 0;">tomorrow — same place, same time! 🍻</p>' +
+    '</div>';
+  leaveModal.style.background = 'transparent';
+});
+
+// CHEERS FORM — real submission
+var cheersForm = document.getElementById('cheersForm');
+var cheersSubmitBtn = cheersForm.querySelector('.submit-btn');
+
+cheersForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  var nameToUse = savedName || cheersNameInput.value;
+  var pegVal = cheersForm.querySelector('input[name="cpeg"]:checked');
+  pegVal = pegVal ? pegVal.value : '';
+  var messageVal = document.getElementById('cheersMessage').value;
+
+  cheersSubmitBtn.disabled = true;
+  cheersSubmitBtn.textContent = "Ek sec...";
+
+  var formData = new FormData();
+  formData.append('type', 'cheers');
+  formData.append('name', nameToUse);
+  formData.append('peg', pegVal);
+  formData.append('message', messageVal);
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors',
+    keepalive: true
+  }).catch(function () {}).finally(function () {
+    // Optimistically add this entry to the top of the Hall of Fame
+    var div = document.createElement('div');
+    div.className = 'fame-entry';
+    var text = '<b>' + nameToUse + '</b> raised a ' + pegVal + ' wala glass';
+    text += messageVal ? ': "' + messageVal + '"' : '!';
+    div.innerHTML = text;
+
+    if (fameList.firstChild && fameList.firstChild.textContent.indexOf('Koi cheers nahi') !== -1) {
+      fameList.innerHTML = '';
     }
-    rants.slice().reverse().forEach(text => {
-      const li = document.createElement('li');
-      li.textContent = text;
-      rantList.appendChild(li);
-    });
-  }
+    fameList.insertBefore(div, fameList.firstChild);
 
-  rantForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const text = rantInput.value.trim();
-    if (!text) return;
-    const rants = JSON.parse(localStorage.getItem(RANT_KEY) || '[]');
-    rants.push(text);
-    localStorage.setItem(RANT_KEY, JSON.stringify(rants.slice(-20)));
-    rantInput.value = '';
-    loadRants();
+    cheersForm.reset();
+    cheersSubmitBtn.disabled = false;
+    cheersSubmitBtn.textContent = "AB CHEERS KAR! 🥂";
   });
-  loadRants();
-
-  // Drink chips
-  document.querySelectorAll('#drinkChips .chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('#drinkChips .chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-    });
-  });
-
-  // Cheers button
-  document.getElementById('cheersBtn').addEventListener('click', () => {
-    const active = document.querySelector('#drinkChips .chip.active');
-    const drink = active ? active.textContent.trim() : 'peg';
-    alert(`Cheers! 🥂 ${drink} ke naam!`);
-  });
-
-  // Exit modal
-  const exitModal = document.getElementById('exitModal');
-  document.getElementById('exitNavBtn').addEventListener('click', () => {
-    exitModal.classList.add('open');
-  });
-  document.getElementById('oneLastBtn').addEventListener('click', () => {
-    exitModal.classList.remove('open');
-  });
-  document.getElementById('gottaGoBtn').addEventListener('click', () => {
-    window.location.href = 'index.html';
-  });
-  exitModal.addEventListener('click', (e) => {
-    if (e.target === exitModal) exitModal.classList.remove('open');
-  });
+});
 </script>
 
 </body>
