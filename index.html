@@ -46,6 +46,14 @@
     -webkit-box-decoration-break: clone;
   }
 
+  .privacy-note {
+    font-size: 13px;
+    color: #cbbba4;
+    opacity: 0.85;
+    margin: -6px 0 8px 2px;
+    line-height: 1.4;
+  }
+
   @media (max-width: 600px) {
     .tagline { font-size: 30px; }
   }
@@ -82,6 +90,14 @@
     <form id="piyoForm">
 
       <input type="text" id="name" name="name" placeholder="Tera naam kya hai?" required>
+
+      <input type="text" id="city" name="city" placeholder="Konsa city se ho?" required>
+
+      <input type="email" id="email" name="email" placeholder="Email address" required>
+
+      <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp No." pattern="[0-9+ ]{10,15}" required>
+
+      <p class="privacy-note">Bhai, tension na le, spam nahi karenge, bas party ka invite bhejenge!</p>
 
       <h2>Aa baith. Bata, kya piyega?</h2>
 
@@ -153,7 +169,7 @@
   });
 
   // FORM SUBMIT
-  var scriptURL = "https://script.google.com/macros/s/AKfycbyYhbjAhYNeB3Y0uPVTgyltYqyST3TYRp8xtw7qhmNBfdeMLY7LZvV0K6r12gFpedMw/exec";
+  var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
   var cheersURL = "cheers.html";
 
   var form = document.getElementById('piyoForm');
