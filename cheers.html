@@ -117,6 +117,21 @@
 
   .fame-entry b { color: #ffc978; font-weight: 600; }
 
+  #fameList {
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  #fameList::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #fameList::-webkit-scrollbar-thumb {
+    background: rgba(225, 180, 112, 0.35);
+    border-radius: 3px;
+  }
+
   /* MODAL */
 
   .modal-overlay {
