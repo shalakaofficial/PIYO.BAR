@@ -64,34 +64,40 @@
     gap: 16px !important;
   }
 
-  /* TV SCENE — full composited photo (TV already sitting on the table), video shows through the green-screen area */
+  /* TV SCENE — this image replaces the site's shared background on this page only */
 
-  .tv-frame {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1642 / 958;
-    margin: 0 auto;
+  body {
+    background-image: none !important;
+    background-color: #17110d;
   }
 
-  .tv-frame-img {
+  #sceneBgWrap {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: #17110d;
+  }
+
+  #sceneBg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    z-index: 2;
+    object-fit: contain;
   }
 
-  .tv-frame iframe {
+  #sceneBgWrap::after {
+    content: "";
     position: absolute;
-    left: 14.3%;
-    top: 46.1%;
-    width: 21.1%;
-    height: 31.2%;
+    inset: 0;
+    background: linear-gradient(rgba(10,7,5,0.35), rgba(10,7,5,0.55));
+  }
+
+  #tvIframe {
+    position: fixed;
     border: none;
     background: #000;
-    z-index: 1;
+    z-index: -1;
   }
 
   /* VISITOR PILLS */
@@ -207,6 +213,17 @@
 
 <body>
 
+<div id="sceneBgWrap">
+  <img id="sceneBg" src="cheers-tv-scene.jpg" alt="">
+</div>
+<iframe
+  id="tvIframe"
+  src="https://www.youtube.com/embed/videoseries?list=PLMPuaohVmr4A"
+  title="PIYO.BAR Playlist"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+></iframe>
+
 <div class="nav">
   <div class="nav-left">
     <img src="favicon-512.png" alt="PIYO.BAR" class="logo">
@@ -221,20 +238,11 @@
 
 <div class="split-wrap">
 
-  <!-- LEFT: RETRO TV -->
+  <!-- LEFT: HEADING (the TV itself now lives in the page background) -->
   <div>
     <h1 class="page-title" id="cheersHeading">Cheers, Yaar!</h1>
     <br>
     <p class="welcome-line">Tera peg ready hai.</p>
-    <div class="tv-frame">
-      <iframe
-        src="https://www.youtube.com/embed/videoseries?list=PLMPuaohVmr4A"
-        title="PIYO.BAR Playlist"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-      ></iframe>
-      <img src="cheers-tv-scene.jpg" alt="PIYO.BAR table with TV" class="tv-frame-img">
-    </div>
   </div>
 
   <!-- RIGHT: VISITOR LIST + HALL OF FAME + FORM -->
@@ -311,6 +319,36 @@
 </div>
 
 <script>
+
+  // POSITION THE TV VIDEO — replicates object-fit:contain math so the
+  // video always lands exactly on the TV screen in the background photo,
+  // regardless of window size.
+  (function () {
+    var IMG_W = 1642, IMG_H = 958;
+    // green-screen rectangle as a fraction of the original image
+    var SCREEN_X = 0.14009, SCREEN_Y = 0.45825, SCREEN_W = 0.21681, SCREEN_H = 0.31838;
+
+    var iframe = document.getElementById('tvIframe');
+
+    function positionTv() {
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+      var scale = Math.min(vw / IMG_W, vh / IMG_H);
+      var dw = IMG_W * scale;
+      var dh = IMG_H * scale;
+      var offsetX = (vw - dw) / 2;
+      var offsetY = (vh - dh) / 2;
+
+      iframe.style.left = (offsetX + SCREEN_X * dw) + 'px';
+      iframe.style.top = (offsetY + SCREEN_Y * dh) + 'px';
+      iframe.style.width = (SCREEN_W * dw) + 'px';
+      iframe.style.height = (SCREEN_H * dh) + 'px';
+    }
+
+    positionTv();
+    window.addEventListener('resize', positionTv);
+    window.addEventListener('load', positionTv);
+  })();
 
   // WHATSAPP LINK (same as home page)
   var waMessage = "Chal, ek peg maarte hain. Aa ja @ PIYO.BAR pe! https://www.piyo.bar 🥃";
