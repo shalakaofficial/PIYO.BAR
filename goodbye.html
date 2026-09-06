@@ -68,6 +68,9 @@
     <img src="favicon-512.png" alt="PIYO.BAR" class="logo">
     <div class="nav-title">PIYO.BAR</div>
   </div>
+  <div class="nav-right">
+    <a href="#" id="whatsappLink">Doston ko bhi bula!</a>
+  </div>
 </div>
 
 <div class="split-wrap">
@@ -101,7 +104,39 @@
 
 </div>
 
+<!-- AMBIENCE BUTTON -->
+<button id="piyoAmbienceBtn">🔇</button>
+<audio id="piyoAmbienceAudio" loop preload="none">
+  <source src="https://github.com/shalakaofficial/PIYO.BAR/raw/refs/heads/main/Ambience%20Noise%20Option%203.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+
+  // WHATSAPP LINK
+  var waMessage = "Chal, ek peg maarte hain. Aa ja @ PIYO.BAR pe! https://www.piyo.bar 🥃";
+  document.getElementById('whatsappLink').href =
+    "https://wa.me/?text=" + encodeURIComponent(waMessage);
+
+  // AMBIENCE TOGGLE
+  var ambBtn = document.getElementById('piyoAmbienceBtn');
+  var ambAudio = document.getElementById('piyoAmbienceAudio');
+  var ambPlaying = false;
+
+  ambBtn.addEventListener('click', function () {
+    if (!ambPlaying) {
+      ambAudio.volume = 0.4;
+      ambAudio.play().then(function () {
+        ambBtn.textContent = '🔊';
+        ambPlaying = true;
+      }).catch(function () {
+        ambBtn.textContent = '⚠️';
+      });
+    } else {
+      ambAudio.pause();
+      ambBtn.textContent = '🔇';
+      ambPlaying = false;
+    }
+  });
 
   var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
 
