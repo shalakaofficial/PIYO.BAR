@@ -11,104 +11,13 @@ html, body {
 }
 
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ===== ENTRANCE SEQUENCE ===== */
-
-/* 1. Background image layer (fades + gently zooms in) */
-#bgLayer {
-  position: fixed;
-  inset: 0;
-  background-image: url('bar-bg.jpg');
+  background-image: linear-gradient(rgba(10,7,5,0.55), rgba(10,7,5,0.72)), url('bar-bg.jpg');
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
-  opacity: 0;
-  transform: scale(1.06);
-  transition: opacity 1.6s ease, transform 3s ease;
-  z-index: 0;
-}
-#bgLayer.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* 3. Black overlay that darkens the scene for readability */
-#dimOverlay {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(rgba(10,7,5,0.58), rgba(10,7,5,0.8));
-  opacity: 0;
-  transition: opacity 1.3s ease;
-  z-index: 1;
-}
-#dimOverlay.show {
-  opacity: 1;
-}
-
-/* Keep real content above the fixed background layers */
-.nav,
-.split-wrap {
-  position: relative;
-  z-index: 2;
-}
-
-/* Nav fades in with the reveal */
-.nav {
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity .7s ease, transform .7s ease;
-}
-.nav.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 2. Sound button */
-#piyoAmbienceBtn {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-#piyoAmbienceBtn.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Typing cursor for the tagline */
-.tagline .cursor {
-  display: inline-block;
-  width: 2px;
-  background: currentColor;
-  margin-left: 2px;
-  vertical-align: -2px;
-  animation: piyoBlink 0.9s steps(1) infinite;
-}
-@keyframes piyoBlink { 50% { opacity: 0; } }
-
-/* 4/5. Generic staggered reveal, used on the form fields */
-.reveal-item {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .55s ease, transform .55s ease;
-}
-.reveal-item.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 5. Form card container itself */
-.glass-card {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.glass-card.show {
-  opacity: 1;
-  transform: translateY(0);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* NAV */
