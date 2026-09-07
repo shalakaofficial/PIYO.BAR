@@ -64,6 +64,11 @@
 
 <body>
 
+<!-- 1. Background image (fades in) -->
+<div id="bgLayer"></div>
+<!-- 3. Black readability overlay (fades in) -->
+<div id="dimOverlay"></div>
+
 <div class="nav">
   <div class="nav-left">
     <img src="favicon-512.png" alt="PIYO.BAR" class="logo">
@@ -89,48 +94,48 @@
 
     <form id="piyoForm">
 
-      <input type="text" id="name" name="name" placeholder="Tera naam kya hai?" required>
+      <input class="reveal-item" type="text" id="name" name="name" placeholder="Tera naam kya hai?" required>
 
-      <input type="text" id="city" name="city" placeholder="Kahan se ho?" required>
+      <input class="reveal-item" type="text" id="city" name="city" placeholder="Kahan se ho?" required>
 
-      <input type="email" id="email" name="email" placeholder="Email ka Address?"
+      <input class="reveal-item" type="email" id="email" name="email" placeholder="Email ka Address?"
         pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
         title="Enter a valid email address (e.g. name@gmail.com)" required>
 
-      <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp ka Number?"
+      <input class="reveal-item" type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp ka Number?"
         pattern="[0-9]{10}" maxlength="10" inputmode="numeric"
         title="Enter a valid 10-digit number" required>
 
-      <p class="privacy-note">Bro, tension na le, spam nahi karenge. Bas party ka invitation bhejenge!</p>
+      <p class="reveal-item privacy-note">Bro, tension na le, spam nahi karenge. Bas party ka invitation bhejenge!</p>
 
-      <h2>Ab bata, kya piyega?</h2>
+      <h2 class="reveal-item">Ab bata, kya piyega?</h2>
 
       <div class="peg-options">
-        <div class="option">
+        <div class="option reveal-item">
           <input type="radio" id="rum" name="peg" value="Rum" required>
           <label for="rum">🥃 Rum</label>
         </div>
-        <div class="option">
+        <div class="option reveal-item">
           <input type="radio" id="whisky" name="peg" value="Whisky">
           <label for="whisky">🥃 Whisky</label>
         </div>
-        <div class="option">
+        <div class="option reveal-item">
           <input type="radio" id="beer" name="peg" value="Beer">
           <label for="beer">🍺 Beer</label>
         </div>
-        <div class="option">
+        <div class="option reveal-item">
           <input type="radio" id="wine" name="peg" value="Wine">
           <label for="wine">🍷 Wine</label>
         </div>
-        <div class="option" style="grid-column: 1 / -1;">
+        <div class="option reveal-item" style="grid-column: 1 / -1;">
           <input type="radio" id="driver" name="peg" value="Designated Driver">
           <label for="driver">🚗 Kuch nahi. Aaj gaddi tera bhai chalaega!</label>
         </div>
       </div>
 
-      <textarea id="message" name="message" placeholder="Aaj ka scene kya hai?"></textarea>
+      <textarea class="reveal-item" id="message" name="message" placeholder="Aaj ka scene kya hai?"></textarea>
 
-      <button type="submit" id="submitBtn" class="submit-btn">CHAL, ORDER KAR 🍻</button>
+      <button type="submit" id="submitBtn" class="reveal-item submit-btn">CHAL, ORDER KAR 🍻</button>
 
     </form>
 
@@ -145,6 +150,84 @@
 </audio>
 
 <script>
+
+  // ===== ENTRANCE SEQUENCE =====
+  // 1. bg image -> 2. sound button -> 3. black overlay -> 4. tagline types in -> 5. form fields stagger in
+
+  function piyoWait(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  function piyoTypeInto(el, text, speed) {
+    return new Promise(function (resolve) {
+      var i = 0;
+      var cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      el.appendChild(cursor);
+      var timer = setInterval(function () {
+        if (i < text.length) {
+          cursor.insertAdjacentText('beforebegin', text.charAt(i));
+          i++;
+        } else {
+          clearInterval(timer);
+          setTimeout(function () { cursor.remove(); resolve(); }, 200);
+        }
+      }, speed);
+    });
+  }
+
+  function piyoLoadBg() {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve; // fail-safe, still continue the sequence
+      img.src = 'bar-bg.jpg';
+    });
+  }
+
+  async function runPiyoIntro() {
+    var bgLayer = document.getElementById('bgLayer');
+    var dimOverlay = document.getElementById('dimOverlay');
+    var nav = document.querySelector('.nav');
+    var ambBtn = document.getElementById('piyoAmbienceBtn');
+    var highlightSpan = document.querySelector('.tagline .highlight');
+    var accentSpan = document.querySelector('.tagline .accent');
+    var glassCard = document.querySelector('.glass-card');
+    var revealItems = document.querySelectorAll('.reveal-item');
+
+    var highlightText = highlightSpan.textContent;
+    var accentText = accentSpan.textContent;
+    highlightSpan.textContent = '';
+    accentSpan.textContent = '';
+
+    // 1. Background image
+    await piyoLoadBg();
+    bgLayer.classList.add('show');
+
+    // 2. Sound button
+    await piyoWait(900);
+    ambBtn.classList.add('show');
+
+    // 3. Black readability overlay
+    await piyoWait(700);
+    dimOverlay.classList.add('show');
+    nav.classList.add('show');
+
+    // 4. Welcome text, typed in
+    await piyoWait(500);
+    await piyoTypeInto(highlightSpan, highlightText, 40);
+    await piyoTypeInto(accentSpan, accentText, 40);
+
+    // 5. Form / interactive section, one by one
+    await piyoWait(350);
+    glassCard.classList.add('show');
+    for (var idx = 0; idx < revealItems.length; idx++) {
+      await piyoWait(90);
+      revealItems[idx].classList.add('show');
+    }
+  }
+
+  runPiyoIntro();
 
   // WHATSAPP LINK
   var waMessage = "Chal, ek peg maarte hain. Aa ja @ PIYO.BAR pe! https://www.piyo.bar 🥃";
