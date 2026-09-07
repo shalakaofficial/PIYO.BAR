@@ -92,9 +92,13 @@
 
       <textarea id="feedback" name="feedback" placeholder="Any feedback or farmaish for next time?"></textarea>
 
-      <input type="email" id="email" name="email" placeholder="Email ka Address">
+      <div id="contactFields" style="display: none;">
 
-      <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp ka Number" pattern="[0-9+ ]{10,15}">
+        <input type="email" id="email" name="email" placeholder="Email ka Address">
+
+        <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp ka Number" pattern="[0-9+ ]{10,15}">
+
+      </div>
 
       <button type="submit" id="submitBtn" class="submit-btn">CHAL, BHEJ DE 📮</button>
 
@@ -138,34 +142,4 @@
     }
   });
 
-  var scriptURL = "https://script.google.com/macros/s/AKfycbzg409hFFeOAIAQlg2Rz4ATHQ92ahA9_jvlxTyBwxOsAEXpQhiftJjyq8iFmjcxu3CW/exec";
-
-  var form = document.getElementById('feedbackForm');
-  var submitBtn = document.getElementById('submitBtn');
-  var card = document.getElementById('feedbackCard');
-
-  form.addEventListener('submit', function (e) {
-
-    e.preventDefault();
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Ek sec...";
-
-    var formData = new FormData(form);
-    formData.append('type', 'feedback');
-
-    fetch(scriptURL, {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors',
-      keepalive: true
-    }).catch(function () {}).finally(function () {
-      card.innerHTML = '<p class="thanks-note">Thanks yaar, milte hain agli baar! 🍻</p>';
-    });
-
-  });
-
-</script>
-
-</body>
-</html>
+  var scriptURL = "
