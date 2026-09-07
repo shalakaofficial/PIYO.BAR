@@ -97,7 +97,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
 
   #sceneBgWrap::after {
@@ -347,7 +347,7 @@
     function positionTv() {
       var vw = window.innerWidth;
       var vh = window.innerHeight;
-      var scale = Math.min(vw / IMG_W, vh / IMG_H);
+      var scale = Math.max(vw / IMG_W, vh / IMG_H);
       var dw = IMG_W * scale;
       var dh = IMG_H * scale;
       var offsetX = (vw - dw) / 2;
