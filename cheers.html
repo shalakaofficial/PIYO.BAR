@@ -111,8 +111,7 @@
     position: fixed;
     border: none;
     background: #000;
-    border-radius: 6%;
-    transform: rotate(-1.5deg);
+    border-radius: 0;
     z-index: 1;
   }
 
@@ -340,9 +339,9 @@
   // video always lands exactly on the TV screen in the background photo,
   // regardless of window size.
   (function () {
-    var IMG_W = 1679, IMG_H = 937;
+    var IMG_W = 1376, IMG_H = 768;
     // green-screen rectangle as a fraction of the original image
-    var SCREEN_X = 0.06254, SCREEN_Y = 0.42156, SCREEN_W = 0.25670, SCREEN_H = 0.34258;
+    var SCREEN_X = 0.07631, SCREEN_Y = 0.42318, SCREEN_W = 0.24782, SCREEN_H = 0.33984;
 
     var iframe = document.getElementById('tvIframe');
 
